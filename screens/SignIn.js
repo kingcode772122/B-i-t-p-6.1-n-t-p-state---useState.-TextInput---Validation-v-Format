@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import InputField from "../components/InputField";
 
 export default function SignIn(){
 
   const [phone,setPhone] = useState("");
   const [error,setError] = useState("");
+  const [isValid,setIsValid] = useState(false);
 
   // format số điện thoại
   const formatPhone = (text)=>{
@@ -26,23 +27,27 @@ export default function SignIn(){
     setPhone(number);
   }
 
-  // validation
+  // kiểm tra số điện thoại
   const validatePhone = (text)=>{
 
     let number = text.replace(/\s/g,"");
 
     if(number.length !== 10){
-      setError("Số điện thoại không đúng định dạng , vui lòng nhập lại");
+      setError("Số điện thoại không đúng định dạng, vui lòng nhập lại");
+      setIsValid(false);
       return false;
     }
 
     if(!number.startsWith("0")){
-      setError("Số điện thoại không đúng định dạng , vui lòng nhập lại");
+      setError("Số điện thoại không đúng định dạng, vui lòng nhập lại");
+      setIsValid(false);
       return false;
     }
 
     setError("");
+    setIsValid(true);
     return true;
+
   }
 
   // khi nhập
@@ -58,14 +63,14 @@ export default function SignIn(){
       Alert.alert("Thông báo","Số điện thoại hợp lệ");
     }
     else{
-      Alert.alert("Lỗi","Số điện thoại không đúng định dạng , vui lòng nhập lại");
+      Alert.alert("Lỗi","Số điện thoại không đúng định dạng");
     }
 
   }
 
   // useEffect chạy khi mở app
   useEffect(()=>{
-    console.log("App started");
+    console.log("SignIn loaded");
   },[])
 
   return(
@@ -87,7 +92,11 @@ export default function SignIn(){
       </View>
 
       <TouchableOpacity
-        style={styles.button}
+        style={[
+          styles.button,
+          { backgroundColor: isValid ? "#1A2BFF" : "#BDBDBD" }
+        ]}
+        disabled={!isValid}
         onPress={handleSubmit}
       >
         <Text style={styles.buttonText}>Tiếp tục</Text>
@@ -121,7 +130,6 @@ const styles = StyleSheet.create({
   },
 
   button:{
-    backgroundColor:"#1A2BFF",
     padding:15,
     borderRadius:6,
     margin:20,

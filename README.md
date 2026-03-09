@@ -8,5 +8,6 @@ Bài tập 6.1: Ôn tập state - useState. TextInput - Validation và Format
 .
 
 ## Hình ảnh kết quả chạy
-![Kết quả chạy ](./sai.jpg)
-![Kết quả chạy](./dung.jpg)
+![Kết quả chạy ](./anhsai1.jpg)
+![Kết quả chạy](./anhsai2.jpg)
+![Kết quả chạy](./anhdung1.jpg)
